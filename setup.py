@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # The Github repo for this project is:
-# https://github.com/4dn-dcic/pipelines-cwl
+# https://github.com/SooLee/Benchmark
 # IMPORTANT: use Python 2.7 or above for this package
 
 from setuptools import setup, find_packages
@@ -9,12 +9,12 @@ setup(
     name="Benchmark",
     version=open("Benchmark/_version.py").readlines()[-1].split()[-1].strip("\"'"),
     description="Benchmark functions that returns total space, mem, cpu given \
-                input size and parameters for the CWL workflows in the pipelines-cwl repo",
-    url="https://github.com/4dn-dcic/pipelines-cwl/",
+                input size and parameters for the CWL workflows",
+    url="https://github.com/SooLee/Benchmark/",
     author="Soo Lee",
     author_email="duplexa@gmail.com",
     license="MIT",
-    keywords=['pipeline-cwl', 'benchmark', 'cwl', 'common workflow language',
+    keywords=['benchmark', 'cwl', 'common workflow language',
               'docker', 'tibanna', 'bioinformatics', '4dn'],
     packages=find_packages(),
     package_data={"": ["aws/*"]},
