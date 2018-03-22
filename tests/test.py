@@ -1,5 +1,5 @@
 import unittest
-from Benchmark import Benchmark as B
+from Benchmark import run as B
 from Benchmark import classes as C
 
 
