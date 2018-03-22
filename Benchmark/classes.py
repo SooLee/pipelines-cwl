@@ -37,7 +37,7 @@ class OptimalInstance(object):
             self.cpu = cpu
         if recommended_instance_type:
             self.recommended_instance_type = recommended_instance_type
-        if EBS_optimized:
+        if EBS_optimized is not None:
             self.EBS_optimized = EBS_optimized
         if EBS_optimization_surcharge:
             self.EBS_optimization_surcharge = EBS_optimization_surcharge
