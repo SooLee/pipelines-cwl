@@ -25,6 +25,8 @@ def fastqc_0_11_4_1(input_json):
 
     input_in_bytes = input_json.get('input_size_in_bytes').get('input_fastq')
     input_size = B2GB(input_in_bytes) * 2 + 3
+    if input_size > 100:
+        input_size = input_size + 20
     mem = 300 * nthreads
     if mem < 1024:
         mem = 1024
