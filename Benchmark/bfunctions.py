@@ -367,6 +367,18 @@ def hi_c_processing_pairs(input_json):
     return(r.as_dict())
 
 
+def hi_c_processing_pairs_nore(input_json):
+    return(hi_c_processing_pairs(input_json))
+
+
+def hi_c_processing_pairs_nonorm(input_json):
+    return(hi_c_processing_pairs(input_json))
+
+
+def hi_c_processing_pairs_nore_nonorm(input_json):
+    return(hi_c_processing_pairs(input_json))
+
+
 def repliseq_parta(input_json):
     assert 'input_size_in_bytes' in input_json
     assert 'fastq' in input_json.get('input_size_in_bytes')

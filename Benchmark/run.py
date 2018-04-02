@@ -26,6 +26,9 @@ app_name_function_map = {
     'hi-c-processing-partc': hi_c_processing_partc,
     'hi-c-processing-bam': hi_c_processing_bam,
     'hi-c-processing-pairs': hi_c_processing_pairs,
+    'hi-c-processing-pairs-nore': hi_c_processing_pairs_nore,
+    'hi-c-processing-pairs-nonorm': hi_c_processing_pairs_nonorm,
+    'hi-c-processing-pairs-nore-nonorm': hi_c_processing_pairs_nore_nonorm,
     'repliseq-parta': repliseq_parta,
     'pairsqc-single': pairsqc_single
 }
