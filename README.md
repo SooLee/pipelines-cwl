@@ -1,3 +1,5 @@
+The repo contains a benchmarking script for some of the CWL workflows used by 4DN-DCIC (https://github.com/4dn-dcic/pipelines-cwl), that returns total space, mem and CPUs required per given input size and a recommended AWS EC2 instance type.
+
 [![Build Status](https://travis-ci.org/SooLee/Benchmark.svg?branch=master)](https://travis-ci.org/SooLee/Benchmark)
 
 ### Example usage of benchmarking script
