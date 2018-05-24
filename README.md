@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/SooLee/Benchmark.svg?branch=master)](https://travis-ci.org/SooLee/Benchmark)
 
 ### Example usage of benchmarking script
 * importing the module
