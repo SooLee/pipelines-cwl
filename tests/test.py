@@ -134,7 +134,7 @@ class TestBenchmark(unittest.TestCase):
         assert 'recommended_instance_type' in res['aws']
         assert res['aws']['recommended_instance_type'] == 't2.2xlarge'
         assert res['min_CPU'] == 8
-        assert int(res['total_size_in_GB']) == 55
+        assert int(res['total_size_in_GB']) == 40
 
     def test_benchmark13(self):
         input_json = {'input_size_in_bytes': {'input_pairs': [1000000000,
@@ -148,8 +148,8 @@ class TestBenchmark(unittest.TestCase):
         print(res)
         assert 'aws' in res
         assert res['min_CPU'] == 8
-        assert int(res['total_mem_in_MB']) == 45776
-        assert int(res['total_size_in_GB']) == 97
+        assert int(res['total_mem_in_MB']) == 40960
+        assert int(res['total_size_in_GB']) == 87
         assert 'recommended_instance_type' in res['aws']
         assert res['aws']['recommended_instance_type'] == 'r4.2xlarge'
 
