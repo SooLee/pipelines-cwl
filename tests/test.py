@@ -20,8 +20,8 @@ class TestGetOptimalInstanceType(unittest.TestCase):
 class TestBenchmark(unittest.TestCase):
     def test_benchmark_chipseq(self):
         print("testing chipseq")
-        input_sizes = {'chip.fastqs': 200000000,
-                       'chip.ctl_fastqs': 300000000,
+        input_sizes = {'chip.fastqs': [2000000000, 3000000000],
+                       'chip.ctl_fastqs': [3000000000, 2000000000],
                        'chip.bwa_idx_tar': 5000000000}
         res = B.benchmark('encode-chipseq',
                           {'input_size_in_bytes': input_sizes})
