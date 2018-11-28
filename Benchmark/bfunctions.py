@@ -2,6 +2,21 @@ from Benchmark.byteformat import B2GB, B2MB, MB2GB, GB2MB
 from Benchmark.classes import BenchmarkResult
 
 
+def encode_chipseq(input_json):
+    assert 'input_size_in_bytes' in input_json
+    insz = input_json['input_size_in_bytes']
+    assert 'chip.fastqs' in insz
+    assert 'chip.bwa_idx_tar' in insz
+    input_fastq_size = insz['chip.fastqs'] + insz.get('chip.ctl_fastqs', 0)
+    input_size = input_fastq_size + insz['chip.bwa_idx_tar']
+    output_size = input_fastq_size * 10
+    total_size_in_gb = B2GB(input_size + output_size)
+    r = BenchmarkResult(size=total_size_in_gb,
+                        mem=30000,
+                        cpu=16)
+    return(r.as_dict())
+
+
 def md5(input_json):
     assert 'input_size_in_bytes' in input_json
     assert 'input_file' in input_json.get('input_size_in_bytes')

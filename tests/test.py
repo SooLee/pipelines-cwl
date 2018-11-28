@@ -18,6 +18,18 @@ class TestGetOptimalInstanceType(unittest.TestCase):
 
 
 class TestBenchmark(unittest.TestCase):
+    def test_benchmark_chipseq(self):
+        print("testing chipseq")
+        input_sizes = {'chip.fastqs': 200000000,
+                       'chip.ctl_fastqs': 300000000,
+                       'chip.bwa_idx_tar': 5000000000}
+        res = B.benchmark('encode-chipseq',
+                          {'input_size_in_bytes': input_sizes})
+        print(res)
+        assert 'aws' in res
+        assert 'recommended_instance_type' in res['aws']
+        assert res['aws']['recommended_instance_type'] == 'c4.4xlarge'
+
     def test_benchmark1(self):
         res = B.benchmark('md5',
                           {'input_size_in_bytes': {'input_file': 200000000}})
@@ -122,8 +134,9 @@ class TestBenchmark(unittest.TestCase):
         assert res['aws']['recommended_instance_type'] == 'r4.large'
 
     def test_benchmark12(self):
-        input_json = {'input_size_in_bytes': {'input_bams': [1000000000, 2000000000],
-                                              'chromsize': 200000},
+        input_sizes = {'input_bams': [1000000000, 2000000000],
+                       'chromsize': 200000}
+        input_json = {'input_size_in_bytes': input_sizes,
                       'parameters': {'nthreads_parse_sort': 1,
                                      'nthreads_merge': 8}}
         res = B.benchmark('hi-c-processing-bam', input_json)

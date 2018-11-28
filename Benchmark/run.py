@@ -30,7 +30,8 @@ app_name_function_map = {
     'hi-c-processing-pairs-nonorm': hi_c_processing_pairs_nonorm,
     'hi-c-processing-pairs-nore-nonorm': hi_c_processing_pairs_nore_nonorm,
     'repliseq-parta': repliseq_parta,
-    'pairsqc-single': pairsqc_single
+    'pairsqc-single': pairsqc_single,
+    'encode-chipseq': encode_chipseq
 }
 
 
