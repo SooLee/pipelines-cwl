@@ -17,6 +17,26 @@ def encode_chipseq(input_json):
     return(r.as_dict())
 
 
+def encode_atacseq(input_json):
+    assert 'input_size_in_bytes' in input_json
+    insz = input_json['input_size_in_bytes']
+    assert 'atac.fastqs' in insz
+    assert 'atac.bowtie2_idx_tar' in insz
+    input_fastq_size = sum(insz['atac.fastqs'])
+    input_size = input_fastq_size + insz['atac.bowtie2_idx_tar']
+    output_size = input_fastq_size * 10
+    total_size_in_gb = B2GB(input_size + output_size)
+    if 'parameters' in input_json and  'atac.bowtie2.cpu' in input_json['parameters']:
+        cpu = input_json['parameters']['atac.bowtie2.cpu'] * 4
+    else:
+        cpu = 16
+    r = BenchmarkResult(size=total_size_in_gb,
+                        mem=30000,
+                        cpu=16)
+    return(r.as_dict())
+
+
+
 def md5(input_json):
     assert 'input_size_in_bytes' in input_json
     assert 'input_file' in input_json.get('input_size_in_bytes')
