@@ -32,7 +32,7 @@ def encode_atacseq(input_json):
         cpu = 16
     r = BenchmarkResult(size=total_size_in_gb,
                         mem=30000,
-                        cpu=16)
+                        cpu=cpu)
     return(r.as_dict())
 
 
