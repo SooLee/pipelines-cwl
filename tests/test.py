@@ -30,7 +30,7 @@ class TestBenchmark(unittest.TestCase):
         assert 'recommended_instance_type' in res['aws']
         assert res['aws']['recommended_instance_type'] == 't2.2xlarge'
         assert res['min_CPU'] == 6
-        assert int(res['total_size_in_GB']) == 27
+        assert int(res['total_size_in_GB']) == 55
 
     def test_benchmark_chipseq(self):
         print("testing chipseq")
