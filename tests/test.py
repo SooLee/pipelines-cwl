@@ -24,11 +24,13 @@ class TestBenchmark(unittest.TestCase):
                        'atac.bowtie2_idx_tar': 5000000000}
         res = B.benchmark('encode-atacseq',
                           {'input_size_in_bytes': input_sizes,
-                           'parameters': {'atac.bowtie2.cpu': 8}})
+                           'parameters': {'atac.bowtie2.cpu': 4}})
         print(res)
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 'c4.8xlarge'
+        assert res['aws']['recommended_instance_type'] == 't2.2xlarge'
+        assert res['min_CPU'] == 6
+        assert int(res['total_size_in_GB']) == 27
 
     def test_benchmark_chipseq(self):
         print("testing chipseq")

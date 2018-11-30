@@ -24,14 +24,14 @@ def encode_atacseq(input_json):
     assert 'atac.bowtie2_idx_tar' in insz
     input_fastq_size = sum(insz['atac.fastqs'])
     input_size = input_fastq_size + insz['atac.bowtie2_idx_tar']
-    output_size = input_fastq_size * 10
+    output_size = input_fastq_size * 4
     total_size_in_gb = B2GB(input_size + output_size)
     if 'parameters' in input_json and  'atac.bowtie2.cpu' in input_json['parameters']:
-        cpu = input_json['parameters']['atac.bowtie2.cpu'] * 4
+        cpu = input_json['parameters']['atac.bowtie2.cpu'] + 2
     else:
-        cpu = 16
+        cpu = 6
     r = BenchmarkResult(size=total_size_in_gb,
-                        mem=30000,
+                        mem=16000,
                         cpu=cpu)
     return(r.as_dict())
 
