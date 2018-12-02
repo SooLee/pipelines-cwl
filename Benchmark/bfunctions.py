@@ -9,7 +9,7 @@ def encode_chipseq(input_json):
     assert 'chip.bwa_idx_tar' in insz
     input_fastq_size = sum(insz['chip.fastqs']) + sum(insz.get('chip.ctl_fastqs', [0]))
     input_size = input_fastq_size + insz['chip.bwa_idx_tar']
-    output_size = input_fastq_size * 10
+    output_size = input_fastq_size * 8 + insz['chip.bwa_idx_tar'] * 4
     total_size_in_gb = B2GB(input_size + output_size)
     r = BenchmarkResult(size=total_size_in_gb,
                         mem=30000,
