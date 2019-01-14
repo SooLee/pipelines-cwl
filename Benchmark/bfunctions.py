@@ -31,7 +31,7 @@ def encode_chipseq_aln_ctl(input_json):
     else:
         cpu = 2
     r = BenchmarkResult(size=total_size_in_gb,
-                        mem=GB2MB(16),
+                        mem=GB2MB(10),
                         cpu=cpu if cpu >= 8 else 8)
     return(r.as_dict())
 
