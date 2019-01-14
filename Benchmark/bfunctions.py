@@ -45,7 +45,7 @@ def encode_chipseq_postaln(input_json):
     input_size = sum(insz['chip.tas']) + sum(insz.get('chip.ctl_tas', [0])) \
                  + sum(insz['chip.bam2ta.no_filt_R1.ta'])
     total_size_in_gb = B2GB(input_size * 35) * 1.2
-    if 'parameters' in input_json and 'chip.spp_cpu' in input_json['parameters']::
+    if 'parameters' in input_json and 'chip.spp_cpu' in input_json['parameters']:
         cpu = input_json['paramaters']['chip.spp_cpu']
     else:
         cpu = 2
