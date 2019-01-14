@@ -32,6 +32,9 @@ app_name_function_map = {
     'repliseq-parta': repliseq_parta,
     'pairsqc-single': pairsqc_single,
     'encode-chipseq': encode_chipseq,
+    'encode-chipseq-aln-chip': encode_chipseq_aln_chip,
+    'encode-chipseq-aln-ctl': encode_chipseq_aln_ctl,
+    'encode-chipseq-postaln': encode_chipseq_postaln,
     'encode-atacseq': encode_atacseq
 }
 

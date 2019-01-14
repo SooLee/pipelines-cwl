@@ -2,6 +2,59 @@ from Benchmark.byteformat import B2GB, B2MB, MB2GB, GB2MB
 from Benchmark.classes import BenchmarkResult
 
 
+def encode_chipseq_aln_chip(input_json):
+    assert 'input_size_in_bytes' in input_json
+    insz = input_json['input_size_in_bytes']
+    assert 'chip.fastqs' in insz
+    assert 'chip.bwa_idx_tar' in insz
+    input_fastq_size = sum(insz['chip.fastqs'])
+    total_size_in_gb = B2GB(input_fastq_size * 6 + insz['chip.bwa_idx_tar'] * 4) * 1.2
+    if 'parameters' in input_json and 'chip.bwa.cpu' in input_json['parameters']:
+        cpu = input_json['parameters']['chip.bwa.cpu']
+    else:
+        cpu = 2
+    r = BenchmarkResult(size=total_size_in_gb,
+                        mem=GB2MB(16),
+                        cpu=cpu if cpu >= 8 else 8)
+    return(r.as_dict())
+
+
+def encode_chipseq_aln_ctl(input_json):
+    assert 'input_size_in_bytes' in input_json
+    insz = input_json['input_size_in_bytes']
+    assert 'chip.ctl_fastqs' in insz
+    assert 'chip.bwa_idx_tar' in insz
+    input_fastq_size = sum(insz['chip.ctl_fastqs'])
+    total_size_in_gb = B2GB(input_fastq_size * 6 + insz['chip.bwa_idx_tar'] * 4) * 1.2
+    if 'parameters' in input_json and 'chip.bwa_ctl.cpu' in input_json['parameters']:
+        cpu = input_json['parameters']['chip.bwa_ctl.cpu']
+    else:
+        cpu = 2
+    r = BenchmarkResult(size=total_size_in_gb,
+                        mem=GB2MB(16),
+                        cpu=cpu if cpu >= 8 else 8)
+    return(r.as_dict())
+
+
+def encode_chipseq_postaln(input_json):
+    assert 'input_size_in_bytes' in input_json
+    insz = input_json['input_size_in_bytes']
+    assert 'chip.tas' in insz
+    assert 'chip.ctl_tas' in insz
+    assert 'chip.bam2ta.no_filt_R1.ta' in insz
+    input_size = sum(insz['chip.tas']) + sum(insz.get('chip.ctl_tas', [0])) \
+                 + sum(insz['chip.bam2ta.no_filt_R1.ta'])
+    total_size_in_gb = B2GB(input_size * 35) * 1.2
+    if 'parameters' in input_json and 'chip.spp_cpu' in input_json['parameters']::
+        cpu = input_json['paramaters']['chip.spp_cpu']
+    else:
+        cpu = 2
+    r = BenchmarkResult(size=total_size_in_gb,
+                        mem=GB2MB(cpu * 7),
+                        cpu=cpu * 4)
+    return(r.as_dict())
+
+
 def encode_chipseq(input_json):
     assert 'input_size_in_bytes' in input_json
     insz = input_json['input_size_in_bytes']
