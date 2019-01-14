@@ -86,12 +86,16 @@ def get_optimal_instance_type(cpu=1, mem_in_gb=0.5,
     with open(instance_info_file, "r") as csvfile:
         spamreader = csv.DictReader(csvfile, delimiter=',', quotechar='"')
         for row in spamreader:
-            row_cpu = int(re.sub(" vCPUs.*", '', row['vCPUs']))
             row_instance_type = row['API Name']
-            row_mem = float(row['Memory'].replace(' GiB', ''))
+            if row_instance_type.startswith('a1'): # skip a1 instances
+                continue
             row_cost_str = row['Linux On Demand cost']
+            if row_cost_str == 'unavailable':
+                continue
             row_cost = float(row_cost_str.replace(' hourly', '')
                                          .replace('$', ''))
+            row_cpu = int(re.sub(" vCPUs.*", '', row['vCPUs']))
+            row_mem = float(row['Memory'].replace(' GiB', ''))
             row_ebs_opt_surcharge = row['EBS Optimized surcharge']
             if row_ebs_opt_surcharge == 'unavailable':
                 row_ebs_opt = False
