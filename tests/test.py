@@ -32,6 +32,43 @@ class TestBenchmark(unittest.TestCase):
         assert res['min_CPU'] == 6
         assert int(res['total_size_in_GB']) == 55
 
+    def test_benchmark_chipseq_aln_chip(self):
+        print("testing chipseq")
+        input_sizes = {'chip.fastqs': [2000000000, 3000000000],
+                       'chip.bwa_idx_tar': 5000000000}
+        res = B.benchmark('encode-chipseq-aln-chip',
+                          {'input_size_in_bytes': input_sizes,
+                           'parameters': {'chip.bwa.cpu': 16}})
+        print(res)
+        assert 'aws' in res
+        assert 'recommended_instance_type' in res['aws']
+        assert res['aws']['recommended_instance_type'] == 'c4.4xlarge'
+
+    def test_benchmark_chipseq_aln_ctl(self):
+        print("testing chipseq")
+        input_sizes = {'chip.ctl_fastqs': [3000000000, 2000000000],
+                       'chip.bwa_idx_tar': 5000000000}
+        res = B.benchmark('encode-chipseq-aln-ctl',
+                          {'input_size_in_bytes': input_sizes,
+                           'parameters': {'chip.bwa_ctl.cpu': 16}})
+        print(res)
+        assert 'aws' in res
+        assert 'recommended_instance_type' in res['aws']
+        assert res['aws']['recommended_instance_type'] == 'c4.4xlarge'
+
+    def test_benchmark_chipseq_postaln(self):
+        print("testing chipseq")
+        input_sizes = {'chip.tas': [2000000000, 3000000000],
+                       'chip.ctl_tas': [3000000000, 2000000000],
+                       'chip.bam2ta_no_filt_R1.ta': [5000000000, 6000000000]}
+        res = B.benchmark('encode-chipseq-postaln',
+                          {'input_size_in_bytes': input_sizes,
+                           'parameters': {'chip.spp_cpu': 4}})
+        print(res)
+        assert 'aws' in res
+        assert 'recommended_instance_type' in res['aws']
+        assert res['aws']['recommended_instance_type'] == 'c4.4xlarge'
+
     def test_benchmark_chipseq(self):
         print("testing chipseq")
         input_sizes = {'chip.fastqs': [2000000000, 3000000000],
@@ -161,7 +198,6 @@ class TestBenchmark(unittest.TestCase):
         assert 'recommended_instance_type' in res['aws']
         assert res['aws']['recommended_instance_type'] == 't2.2xlarge'
         assert res['min_CPU'] == 8
-        assert int(res['total_size_in_GB']) == 40
 
     def test_benchmark13(self):
         input_json = {'input_size_in_bytes': {'input_pairs': [1000000000,
@@ -175,8 +211,6 @@ class TestBenchmark(unittest.TestCase):
         print(res)
         assert 'aws' in res
         assert res['min_CPU'] == 8
-        assert int(res['total_mem_in_MB']) == 40960
-        assert int(res['total_size_in_GB']) == 87
         assert 'recommended_instance_type' in res['aws']
         assert res['aws']['recommended_instance_type'] == 'r4.2xlarge'
 
