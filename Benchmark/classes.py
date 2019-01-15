@@ -5,11 +5,13 @@ from Benchmark.byteformat import MB2GB
 
 
 class BenchmarkResult(object):
-    def __init__(self, size, mem, cpu):
+    def __init__(self, size, mem, cpu, exclude_a1=True, exclude_t=False):
         self.total_size_in_GB = size
         self.total_mem_in_MB = mem
         self.min_CPU = cpu
-        self.aws = get_optimal_instance_type(cpu=cpu, mem_in_gb=MB2GB(mem))
+        self.aws = get_optimal_instance_type(cpu=cpu,
+                                             mem_in_gb=MB2GB(mem),
+                                             exclude_a1=exclude_a1, exclude_t=exclude_t)
 
     def as_dict(self):
         return rdict(self)
@@ -81,13 +83,16 @@ def get_aws_ec2_info_file():
 
 
 def get_optimal_instance_type(cpu=1, mem_in_gb=0.5,
-                              instance_info_file=get_aws_ec2_info_file()):
+                              instance_info_file=get_aws_ec2_info_file(),
+                              exclude_a1=True, exclude_t=False):
     res = OptimalInstance(100000)
     with open(instance_info_file, "r") as csvfile:
         spamreader = csv.DictReader(csvfile, delimiter=',', quotechar='"')
         for row in spamreader:
             row_instance_type = row['API Name']
-            if row_instance_type.startswith('a1'): # skip a1 instances
+            if exclude_a1 and row_instance_type.startswith('a1'): # skip a1 instances
+                continue
+            if exclude_t and row_instance_type.startswith('t'): # skip t instances
                 continue
             row_cost_str = row['Linux On Demand cost']
             if row_cost_str == 'unavailable':

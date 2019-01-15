@@ -15,7 +15,8 @@ def encode_chipseq_aln_chip(input_json):
         cpu = 2
     r = BenchmarkResult(size=total_size_in_gb,
                         mem=GB2MB(16),
-                        cpu=cpu if cpu >= 8 else 8)
+                        cpu=cpu if cpu >= 8 else 8,
+                        exclude_t=True)
     return(r.as_dict())
 
 
@@ -32,7 +33,8 @@ def encode_chipseq_aln_ctl(input_json):
         cpu = 2
     r = BenchmarkResult(size=total_size_in_gb,
                         mem=GB2MB(10),
-                        cpu=cpu if cpu >= 8 else 8)
+                        cpu=cpu if cpu >= 8 else 8,
+                        exclude_t=True)
     return(r.as_dict())
 
 
@@ -50,7 +52,8 @@ def encode_chipseq_postaln(input_json):
         cpu = 2
     r = BenchmarkResult(size=total_size_in_gb,
                         mem=GB2MB(cpu * 7),
-                        cpu=cpu * 4)
+                        cpu=cpu * 4,
+                        exclude_t=True)
     return(r.as_dict())
 
 
