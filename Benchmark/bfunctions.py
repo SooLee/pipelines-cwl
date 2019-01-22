@@ -2,6 +2,38 @@ from Benchmark.byteformat import B2GB, B2MB, MB2GB, GB2MB
 from Benchmark.classes import BenchmarkResult
 
 
+def encode_atacseq_aln(input_json):
+    assert 'input_size_in_bytes' in input_json
+    insz = input_json['input_size_in_bytes']
+    assert 'atac.fastqs' in insz
+    assert 'atac.bowtie2_idx_tar' in insz
+    input_fastq_size = sum(insz['atac.fastqs'])
+    total_size_in_gb = B2GB(input_fastq_size * 10 + insz['atac.bowtie2_idx_tar']) * 1.5
+    if 'parameters' in input_json and 'atac.bowtie2.cpu' in input_json['parameters']:
+        cpu = input_json['parameters']['atac.bowtie2.cpu']
+    else:
+        cpu = 2
+    r = BenchmarkResult(size=total_size_in_gb,
+                        mem=GB2MB(8),
+                        cpu=cpu,
+                        exclude_t=True)
+    return(r.as_dict())
+
+
+def encode_atacseq_postaln(input_json):
+    assert 'input_size_in_bytes' in input_json
+    insz = input_json['input_size_in_bytes']
+    assert 'atac.tas' in insz
+    input_size = sum(insz['atac.tas'])
+    total_size_in_gb = B2GB(input_size * 25) * 1.5
+    cpu = 4
+    r = BenchmarkResult(size=total_size_in_gb,
+                        mem=GB2MB(8),
+                        cpu=cpu,
+                        exclude_t=True)
+    return(r.as_dict())
+
+
 def encode_chipseq_aln_chip(input_json):
     assert 'input_size_in_bytes' in input_json
     insz = input_json['input_size_in_bytes']

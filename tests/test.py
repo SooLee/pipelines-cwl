@@ -18,6 +18,28 @@ class TestGetOptimalInstanceType(unittest.TestCase):
 
 
 class TestBenchmark(unittest.TestCase):
+    def test_benchmark_atacseq_aln(self):
+        print("testing atacseq-aln")
+        input_sizes = {'atac.fastqs': [1200000000, 1200000000, 1500000000, 1500000000],
+                       'atac.bowtie2_idx_tar': 5000000000}
+        res = B.benchmark('encode-atacseq-aln',
+                          {'input_size_in_bytes': input_sizes,
+                           'parameters': {'atac.bowtie2.cpu': 4}})
+        print(res)
+        assert 'aws' in res
+        assert 'recommended_instance_type' in res['aws']
+        assert res['aws']['recommended_instance_type'] == 'c5.xlarge'
+
+    def test_benchmark_atacseq_postaln(self):
+        print("testing atacseq-postaln")
+        input_sizes = {'atac.tas': [827000000]}
+        res = B.benchmark('encode-atacseq-postaln',
+                          {'input_size_in_bytes': input_sizes})
+        print(res)
+        assert 'aws' in res
+        assert 'recommended_instance_type' in res['aws']
+        assert res['aws']['recommended_instance_type'] == 'c5.xlarge'
+
     def test_benchmark_atacseq(self):
         print("testing atacseq")
         input_sizes = {'atac.fastqs': [2000000000, 3000000000],
