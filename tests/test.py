@@ -38,7 +38,7 @@ class TestBenchmark(unittest.TestCase):
         print(res)
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 'c5.xlarge'
+        assert res['aws']['recommended_instance_type'] == 'c5.4xlarge'
 
     def test_benchmark_atacseq(self):
         print("testing atacseq")
