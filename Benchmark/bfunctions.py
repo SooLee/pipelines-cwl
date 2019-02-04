@@ -26,11 +26,11 @@ def encode_atacseq_postaln(input_json):
     assert 'atac.tas' in insz
     input_size = sum(insz['atac.tas'])
     nRep = len(insz['atac.tas'])
-    total_size_in_gb = B2GB(input_size * 55 + 16 * (nRep - 1)) * 1.5
+    total_size_in_gb = (B2GB(input_size * 55) + 16 * (nRep - 1)) * 1.5
     cpu = 12 + 4 * (nRep - 1)
     mem = 8 + 4 * (nRep - 1)
     r = BenchmarkResult(size=total_size_in_gb,
-                        mem=GB2MB(8),
+                        mem=GB2MB(mem),
                         cpu=cpu,
                         exclude_t=True)
     return(r.as_dict())
