@@ -24,7 +24,7 @@ class TestBenchmark(unittest.TestCase):
                        'atac.bowtie2_idx_tar': 5000000000}
         res = B.benchmark('encode-atacseq-aln',
                           {'input_size_in_bytes': input_sizes,
-                           'parameters': {'atac.bowtie2.cpu': 4}})
+                           'parameters': {'atac.bowtie2.cpu': 4, 'atac.paired_end': True}})
         print(res)
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']

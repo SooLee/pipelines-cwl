@@ -8,13 +8,19 @@ def encode_atacseq_aln(input_json):
     assert 'atac.fastqs' in insz
     assert 'atac.bowtie2_idx_tar' in insz
     input_fastq_size = sum(insz['atac.fastqs'])
-    total_size_in_gb = B2GB(input_fastq_size * 10 + insz['atac.bowtie2_idx_tar']) * 1.5
+    if input_json['parameters'].get('atac.paired_end', ''):
+        nTechRep = len(insz['atac.fastqs']) / 2 # we assume one biological replicate
+    else:
+        nTechRep = len(insz['atac.fastqs'])
+    print("nTechRep = " + str(nTechRep))
+    total_size_in_gb = B2GB((input_fastq_size * 5 + insz['atac.bowtie2_idx_tar'] * 2.5) * nTechRep) * 1.5
     if 'parameters' in input_json and 'atac.bowtie2.cpu' in input_json['parameters']:
         cpu = input_json['parameters']['atac.bowtie2.cpu']
     else:
         cpu = 2
+    mem = 6 + 2 * (nTechRep - 1)
     r = BenchmarkResult(size=total_size_in_gb,
-                        mem=GB2MB(8),
+                        mem=GB2MB(mem),
                         cpu=cpu,
                         exclude_t=True)
     return(r.as_dict())
