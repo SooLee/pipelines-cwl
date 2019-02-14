@@ -18,6 +18,15 @@ class TestGetOptimalInstanceType(unittest.TestCase):
 
 
 class TestBenchmark(unittest.TestCase):
+    def test_mergebed(self):
+        print("mergebed")
+        input_sizes = {'input_bed': [400000000, 500000000]}
+        res = B.benchmark('mergebed', {'input_size_in_bytes': input_sizes})
+        print(res)
+        assert 'aws' in res
+        assert 'recommended_instance_type' in res['aws']
+        assert res['aws']['recommended_instance_type'] == 't3.micro'
+
     def test_benchmark_atacseq_aln(self):
         print("testing atacseq-aln")
         input_sizes = {'atac.fastqs': [1200000000, 1200000000, 1500000000, 1500000000],
