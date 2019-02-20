@@ -37,7 +37,8 @@ app_name_function_map = {
     'encode-chipseq-postaln': encode_chipseq_postaln,
     'encode-atacseq': encode_atacseq,
     'encode-atacseq-aln': encode_atacseq_aln,
-    'encode-atacseq-postaln': encode_atacseq_postaln
+    'encode-atacseq-postaln': encode_atacseq_postaln,
+    'mergebed': mergebed,
 }
 
 

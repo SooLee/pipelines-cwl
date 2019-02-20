@@ -2,6 +2,18 @@ from Benchmark.byteformat import B2GB, B2MB, MB2GB, GB2MB
 from Benchmark.classes import BenchmarkResult
 
 
+def mergebed(input_json):
+    assert 'input_size_in_bytes' in input_json
+    insz = input_json['input_size_in_bytes']
+    assert 'input_bed' in insz
+    input_size = sum(insz['input_bed'])
+    total_size_in_gb = B2GB((input_size * 5) * 1.5)
+    r = BenchmarkResult(size=total_size_in_gb,
+                        mem=1024,
+                        cpu=2)
+    return(r.as_dict())
+
+
 def encode_atacseq_aln(input_json):
     assert 'input_size_in_bytes' in input_json
     insz = input_json['input_size_in_bytes']
