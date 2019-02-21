@@ -7,7 +7,7 @@ def mergebed(input_json):
     insz = input_json['input_size_in_bytes']
     assert 'input_bed' in insz
     input_size = sum(insz['input_bed'])
-    total_size_in_gb = B2GB((input_size * 5) * 1.5)
+    total_size_in_gb = B2GB((input_size * 5) * 3)
     r = BenchmarkResult(size=total_size_in_gb,
                         mem=1024,
                         cpu=2)
@@ -44,7 +44,7 @@ def encode_atacseq_postaln(input_json):
     assert 'atac.tas' in insz
     input_size = sum(insz['atac.tas'])
     nRep = len(insz['atac.tas'])
-    total_size_in_gb = (B2GB(input_size * 55) + 16 * (nRep - 1)) * 1.8
+    total_size_in_gb = (B2GB(input_size * 55) + 16 * (nRep - 1)) * 2.5
     cpu = 12 + 4 * (nRep - 1)
     mem = 8 + 4 * (nRep - 1)
     r = BenchmarkResult(size=total_size_in_gb,
