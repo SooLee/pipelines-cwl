@@ -18,6 +18,29 @@ class TestGetOptimalInstanceType(unittest.TestCase):
 
 
 class TestBenchmark(unittest.TestCase):
+    def test_repliseq(self):
+        print("repliseq se")
+        input_json = {'input_size_in_bytes': {'fastq': 93520000,
+                                              'bwaIndex': 3364568000},
+                      'parameters': {'nthreads': 4}}
+        res = B.benchmark('repliseq-parta', input_json)
+        print(res)
+        assert 'aws' in res
+        assert 'recommended_instance_type' in res['aws']
+        assert res['aws']['recommended_instance_type'] == 't2.xlarge'
+
+    def test_repliseq2(self):
+        print("repliseq pe")
+        input_json = {'input_size_in_bytes': {'fastq': 93520000,
+                                              'fastq2': 97604000,
+                                              'bwaIndex': 3364568000},
+                      'parameters': {'nthreads': 4}}
+        res = B.benchmark('repliseq-parta', input_json)
+        print(res)
+        assert 'aws' in res
+        assert 'recommended_instance_type' in res['aws']
+        assert res['aws']['recommended_instance_type'] == 't2.xlarge'
+
     def test_mergebed(self):
         print("mergebed")
         input_sizes = {'input_bed': [400000000, 500000000]}

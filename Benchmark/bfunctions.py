@@ -535,6 +535,8 @@ def repliseq_parta(input_json):
     # space
     input_sizes = input_json.get('input_size_in_bytes')
     data_input_size = input_sizes.get('fastq')
+    if 'fastq2' in input_sizes:
+        data_input_size += input_sizes.get('fastq2')
     total_input_size = data_input_size + input_sizes.get('bwaIndex')
     output_bam_size = data_input_size * 2
     output_clipped_fq_size = data_input_size
