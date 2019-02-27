@@ -534,27 +534,15 @@ def repliseq_parta(input_json):
 
     # space
     input_sizes = input_json.get('input_size_in_bytes')
-    data_input_size = input_sizes.get('fastq')
-    if 'fastq2' in input_sizes:
-        data_input_size += input_sizes.get('fastq2')
-    total_input_size = data_input_size + input_sizes.get('bwaIndex')
-    output_bam_size = data_input_size * 2
-    output_clipped_fq_size = data_input_size
-    output_size = output_bam_size * 3 + output_clipped_fq_size
-    intermediate_index_size = input_sizes.get('bwaIndex') * 2
-    copied_input_size = data_input_size * 7  # copied and unzipped
-    total_intermediate_size \
-        = intermediate_index_size + output_size + copied_input_size
-    total_output_size = output_size
-    additional_size_in_gb = 10
+    input_fastq = B2GB(input_sizes.get('fastq'))
+    input_bwa = B2GB(input_sizes.get('bwaIndex'))
+    if 'fastq2' in input_sizes: # pe
+        total_space = input_fastq * 0.85 + input_bwa * 2.58
+        mem = input_fastq * 228 + nthreads * 329 + input_bwa * 1660
+    else: # se
+        total_space = input_fastq * 0.48 + input_bwa * 2.54
+        mem = input_fastq * 262 + nthreads * 221 + input_bwa * 1660
 
-    total_file_size_in_bp \
-        = total_input_size + total_intermediate_size + total_output_size
-    total_size = B2GB(total_file_size_in_bp) + additional_size_in_gb
-
-    # mem
-    mem = B2MB(input_sizes.get('bwaIndex') * 4) + (nthreads * 500)
-
-    r = BenchmarkResult(size=total_size, mem=mem, cpu=nthreads)
+    r = BenchmarkResult(size=total_space * 1.5, mem=mem * 1.5, cpu=nthreads)
 
     return(r.as_dict())

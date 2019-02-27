@@ -1,7 +1,7 @@
 import unittest
 from Benchmark import run as B
 from Benchmark import classes as C
-
+from Benchmark.byteformat import GB2B
 
 class TestGetOptimalInstanceType(unittest.TestCase):
     def test_get_optimal_instance_type1(self):
@@ -20,26 +20,26 @@ class TestGetOptimalInstanceType(unittest.TestCase):
 class TestBenchmark(unittest.TestCase):
     def test_repliseq(self):
         print("repliseq se")
-        input_json = {'input_size_in_bytes': {'fastq': 93520000,
-                                              'bwaIndex': 3364568000},
+        input_json = {'input_size_in_bytes': {'fastq': GB2B(10),
+                                              'bwaIndex': GB2B(3.21)},
                       'parameters': {'nthreads': 4}}
         res = B.benchmark('repliseq-parta', input_json)
         print(res)
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 't2.xlarge'
+        assert res['aws']['recommended_instance_type'] == 't3.xlarge'
 
     def test_repliseq2(self):
         print("repliseq pe")
-        input_json = {'input_size_in_bytes': {'fastq': 93520000,
-                                              'fastq2': 97604000,
-                                              'bwaIndex': 3364568000},
+        input_json = {'input_size_in_bytes': {'fastq': GB2B(10),
+                                              'fastq2': GB2B(10),
+                                              'bwaIndex': GB2B(3.21)},
                       'parameters': {'nthreads': 4}}
         res = B.benchmark('repliseq-parta', input_json)
         print(res)
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 't2.xlarge'
+        assert res['aws']['recommended_instance_type'] == 't3.xlarge'
 
     def test_mergebed(self):
         print("mergebed")
