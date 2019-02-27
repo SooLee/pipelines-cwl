@@ -1,7 +1,7 @@
 import unittest
 from Benchmark import run as B
 from Benchmark import classes as C
-from Benchmark.byteformat import GB2B
+from Benchmark.byteformat import GB2B, MB2B
 
 class TestGetOptimalInstanceType(unittest.TestCase):
     def test_get_optimal_instance_type1(self):
@@ -20,7 +20,7 @@ class TestGetOptimalInstanceType(unittest.TestCase):
 class TestBenchmark(unittest.TestCase):
     def test_repliseq(self):
         print("repliseq se")
-        input_json = {'input_size_in_bytes': {'fastq': GB2B(10),
+        input_json = {'input_size_in_bytes': {'fastq': MB2B(270),
                                               'bwaIndex': GB2B(3.21)},
                       'parameters': {'nthreads': 4}}
         res = B.benchmark('repliseq-parta', input_json)
@@ -31,8 +31,8 @@ class TestBenchmark(unittest.TestCase):
 
     def test_repliseq2(self):
         print("repliseq pe")
-        input_json = {'input_size_in_bytes': {'fastq': GB2B(10),
-                                              'fastq2': GB2B(10),
+        input_json = {'input_size_in_bytes': {'fastq': MB2B(270),
+                                              'fastq2': MB2B(270),
                                               'bwaIndex': GB2B(3.21)},
                       'parameters': {'nthreads': 4}}
         res = B.benchmark('repliseq-parta', input_json)

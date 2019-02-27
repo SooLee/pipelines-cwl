@@ -534,14 +534,14 @@ def repliseq_parta(input_json):
 
     # space
     input_sizes = input_json.get('input_size_in_bytes')
-    input_fastq = B2GB(input_sizes.get('fastq'))
+    input_fastq = B2MB(input_sizes.get('fastq'))
     input_bwa = B2GB(input_sizes.get('bwaIndex'))
     if 'fastq2' in input_sizes: # pe
-        total_space = input_fastq * 0.85 + input_bwa * 2.58
-        mem = input_fastq * 228 + nthreads * 329 + input_bwa * 1660
+        total_space = input_fastq * 0.032 + input_bwa * 2.58
+        mem = input_fastq * 8.48 + nthreads * 329 + input_bwa * 1658
     else: # se
-        total_space = input_fastq * 0.48 + input_bwa * 2.54
-        mem = input_fastq * 262 + nthreads * 221 + input_bwa * 1660
+        total_space = input_fastq * 0.018 + input_bwa * 2.54
+        mem = input_fastq * 9.73 + nthreads * 221 + input_bwa * 1658
 
     r = BenchmarkResult(size=total_space * 1.5, mem=mem * 1.5, cpu=nthreads)
 

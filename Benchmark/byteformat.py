@@ -21,3 +21,7 @@ def GB2MB(x):
 
 def GB2B(x):
     return(x*GB_IN_BYTES)
+
+
+def MB2B(x):
+    return(x*MB_IN_BYTES)
