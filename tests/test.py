@@ -282,6 +282,14 @@ class TestBenchmark(unittest.TestCase):
         res = B.benchmark('some_weird_name', input_json)
         assert res is None
 
+    def test_benchmark_insulator_score_caller(self):
+        input_json = {'input_size_in_bytes': {'mcoolfile': 32000000000}}
+        res = B.benchmark('insulator_score_caller', input_json)
+        assert 'aws' in res
+        assert 'recommended_instance_type' in res['aws']
+        assert res['aws']['recommended_instance_type'] == 't2.medium'
+        print(res)
+
 
 if __name__ == '__main__':
     unittest.main()
