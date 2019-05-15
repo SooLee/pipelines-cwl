@@ -5,7 +5,7 @@ The repo contains a benchmarking script for some of the CWL workflows used by 4D
 ### Example usage of benchmarking script
 * importing the module
 ```python
-from Benchmark import Benchmark as B
+from Benchmark import run as B
 ```
 
 * md5
@@ -43,6 +43,10 @@ B.benchmark(app_name, input_json)
 ```
 
 To use Benchmark in from other places, install it as below.
+```
+pip install Benchmark-4dn
+```
+or
 ```
 pip install git+git://github.com/SooLee/Benchmark.git
 ```
