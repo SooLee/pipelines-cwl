@@ -90,9 +90,9 @@ def get_optimal_instance_type(cpu=1, mem_in_gb=0.5,
         spamreader = csv.DictReader(csvfile, delimiter=',', quotechar='"')
         for row in spamreader:
             row_instance_type = row['API Name']
-            if exclude_a1 and row_instance_type.startswith('a1'): # skip a1 instances
+            if exclude_a1 and row_instance_type.startswith('a1'):  # skip a1 instances
                 continue
-            if exclude_t and row_instance_type.startswith('t'): # skip t instances
+            if exclude_t and row_instance_type.startswith('t'):  # skip t instances
                 continue
             row_cost_str = row['Linux On Demand cost']
             if row_cost_str == 'unavailable':
@@ -118,6 +118,58 @@ def get_optimal_instance_type(cpu=1, mem_in_gb=0.5,
         raise NoMatchingInstanceException
 
     return(res.as_dict())
+
+
+def instance_list(instance_info_file=get_aws_ec2_info_file(),
+                  exclude_a1=True,
+                  exclude_t=False):
+    """Return all instances in the input document as list of dictionaries."""
+    instances = []
+    with open(instance_info_file, "r") as csvfile:
+        spamreader = csv.DictReader(csvfile, delimiter=',', quotechar='"')
+        for row in spamreader:
+            row_instance_type = row['API Name']
+            if exclude_a1 and row_instance_type.startswith('a1'):  # skip a1 instances
+                continue
+            if exclude_t and row_instance_type.startswith('t'):  # skip t instances
+                continue
+            row_cost_str = row['Linux On Demand cost']
+            if row_cost_str == 'unavailable':
+                continue
+            row_cost = float(row_cost_str.replace(' hourly', '')
+                                         .replace('$', ''))
+            row_cpu = int(re.sub(" vCPUs.*", '', row['vCPUs']))
+            row_mem = float(row['Memory'].replace(' GiB', ''))
+            row_ebs_opt_surcharge = row['EBS Optimized surcharge']
+            if row_ebs_opt_surcharge == 'unavailable':
+                row_ebs_opt = False
+                row_ebs_opt_surcharge = None
+            else:
+                row_ebs_opt = True
+                row_ebs_opt_surcharge \
+                    = float(row_ebs_opt_surcharge.replace(' hourly', '')
+                                                 .replace('$', ''))
+            instances.append({'cost_in_usd': row_cost,
+                              'mem_in_gb': row_mem,
+                              'cpu': row_cpu,
+                              'instance_type': row_instance_type,
+                              'EBS_optimized': row_ebs_opt,
+                              'EBS_optimization_surcharge': row_ebs_opt_surcharge})
+    return instances
+
+
+def get_instance_types(cpu=1, mem_in_gb=0.5, instances=instance_list(), top=10, rank='cost_in_usd'):
+    """Return a filtered list of instance based on cpu and memory."""
+    # check that rank is a float field
+    try:
+        assert rank in ['cost_in_usd', 'mem_in_gb', 'cpu']
+    except AssertionError:
+        print('Can not order instances by {}'.format(rank))
+    # filter results
+    results = [i for i in instances if i['cpu'] >= cpu and i['mem_in_gb'] >= mem_in_gb]
+    # order results
+    results = sorted(results, key=lambda k: k[rank])
+    return results[:top]
 
 
 # Exceptions

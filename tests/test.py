@@ -3,6 +3,7 @@ from Benchmark import run as B
 from Benchmark import classes as C
 from Benchmark.byteformat import GB2B, MB2B
 
+
 class TestGetOptimalInstanceType(unittest.TestCase):
     def test_get_optimal_instance_type1(self):
         res = C.get_optimal_instance_type()
@@ -290,6 +291,41 @@ class TestBenchmark(unittest.TestCase):
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
         assert res['aws']['recommended_instance_type'] == 't3.small'
+
+
+class TestGetInstanceList(unittest.TestCase):
+    def test_instance_list(self):
+        res = C.instance_list(exclude_a1=True)
+        # we should have quite some instaces in the filter
+        assert len(res) > 50
+        # we should have certain keys in each dictionary
+        for a_field in ['cost_in_usd', 'mem_in_gb', 'cpu', 'instance_type',
+                        'EBS_optimized', 'EBS_optimization_surcharge']:
+            assert a_field in res[0]
+        # no a1 instance should be in the list
+        a1_instances = [i for i in res if i['instance_type'].startswith('a1')]
+        assert not a1_instances
+        # let's test the other way around
+        res_a1 = C.instance_list(exclude_a1=False)
+        a1_instances = [i for i in res_a1 if i['instance_type'].startswith('a1')]
+        assert a1_instances
+
+    def test_get_instance_types(self):
+        res = C.get_instance_types(cpu=10, mem_in_gb=50)
+        # make sure we have something in the results
+        assert res
+        # default ranking is by cost, assert cheapest is the first one
+        costs = [i['cost_in_usd'] for i in res]
+        min_cost = min(costs)
+        max_cost = max(costs)
+        assert res[0]['cost_in_usd'] == min_cost
+        assert res[-1]['cost_in_usd'] == max_cost
+        # limit the result length
+        res = C.get_instance_types(cpu=10, mem_in_gb=50, top=3)
+        assert len(res) == 3
+        # if top is more then the result, it should return all
+        res = C.get_instance_types(cpu=10, mem_in_gb=50, top=300)
+        assert len(res) < 300
 
 
 if __name__ == '__main__':
