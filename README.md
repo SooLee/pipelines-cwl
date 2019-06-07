@@ -58,3 +58,8 @@ Note: From `0.5.3` we have a new function that takes in cpu and memory and retur
 ```
 get_instance_types(cpu=1, mem_in_gb=0.5, instances=instance_list(), top=10, rank='cost_in_usd')
 ```
+
+Keys in each instance dictionary:
+```
+'cost_in_usd', 'mem_in_gb', 'cpu', 'instance_type', 'EBS_optimized', 'EBS_optimization_surcharge'
+```
