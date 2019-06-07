@@ -3,18 +3,17 @@ from Benchmark import run as B
 from Benchmark import classes as C
 from Benchmark.byteformat import GB2B, MB2B
 
+
 class TestGetOptimalInstanceType(unittest.TestCase):
     def test_get_optimal_instance_type1(self):
         res = C.get_optimal_instance_type()
         assert 'recommended_instance_type' in res
-        assert res['recommended_instance_type'] == 't2.nano'
-        print(res)
+        assert res['recommended_instance_type'] == 't3.nano'
 
     def test_get_optimal_instance_type2(self):
         res = C.get_optimal_instance_type(cpu=32, mem_in_gb=16)
         assert 'recommended_instance_type' in res
-        assert res['recommended_instance_type'] == 'c4.8xlarge'
-        print(res)
+        assert res['recommended_instance_type'] == 'c5.9xlarge'
 
 
 class TestBenchmark(unittest.TestCase):
@@ -79,10 +78,9 @@ class TestBenchmark(unittest.TestCase):
         res = B.benchmark('encode-atacseq',
                           {'input_size_in_bytes': input_sizes,
                            'parameters': {'atac.bowtie2.cpu': 4}})
-        print(res)
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 't2.2xlarge'
+        assert res['aws']['recommended_instance_type'] == 't3.2xlarge'
         assert res['min_CPU'] == 6
         assert int(res['total_size_in_GB']) == 55
 
@@ -93,10 +91,9 @@ class TestBenchmark(unittest.TestCase):
         res = B.benchmark('encode-chipseq-aln-chip',
                           {'input_size_in_bytes': input_sizes,
                            'parameters': {'chip.bwa.cpu': 16}})
-        print(res)
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 'c4.4xlarge'
+        assert res['aws']['recommended_instance_type'] == 'c5.4xlarge'
 
     def test_benchmark_chipseq_aln_ctl(self):
         print("testing chipseq")
@@ -105,10 +102,9 @@ class TestBenchmark(unittest.TestCase):
         res = B.benchmark('encode-chipseq-aln-ctl',
                           {'input_size_in_bytes': input_sizes,
                            'parameters': {'chip.bwa_ctl.cpu': 16}})
-        print(res)
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 'c4.4xlarge'
+        assert res['aws']['recommended_instance_type'] == 'c5.4xlarge'
 
     def test_benchmark_chipseq_postaln(self):
         print("testing chipseq")
@@ -118,10 +114,9 @@ class TestBenchmark(unittest.TestCase):
         res = B.benchmark('encode-chipseq-postaln',
                           {'input_size_in_bytes': input_sizes,
                            'parameters': {'chip.spp_cpu': 4}})
-        print(res)
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 'c4.4xlarge'
+        assert res['aws']['recommended_instance_type'] == 'c5.4xlarge'
 
     def test_benchmark_chipseq(self):
         print("testing chipseq")
@@ -133,14 +128,14 @@ class TestBenchmark(unittest.TestCase):
         print(res)
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 'c4.4xlarge'
+        assert res['aws']['recommended_instance_type'] == 'c5.4xlarge'
 
     def test_benchmark1(self):
         res = B.benchmark('md5',
                           {'input_size_in_bytes': {'input_file': 200000000}})
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 't2.micro'
+        assert res['aws']['recommended_instance_type'] == 't3.micro'
         print(res)
 
     def test_benchmark2(self):
@@ -149,7 +144,7 @@ class TestBenchmark(unittest.TestCase):
                            'parameters': {'threads': 2}})
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 't2.medium'
+        assert res['aws']['recommended_instance_type'] == 't3.micro'
         print(res)
 
     def test_benchmark3(self):
@@ -160,7 +155,7 @@ class TestBenchmark(unittest.TestCase):
         res = B.benchmark('bwa-mem', input_json)
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 't2.xlarge'
+        assert res['aws']['recommended_instance_type'] == 't3.xlarge'
         print(res)
 
     def test_benchmark4(self):
@@ -169,7 +164,7 @@ class TestBenchmark(unittest.TestCase):
                            'parameters': {'nThreads': 16}})
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 'c4.8xlarge'
+        assert res['aws']['recommended_instance_type'] == 'c5.9xlarge'
         print(res)
 
     def test_benchmark5(self):
@@ -180,7 +175,7 @@ class TestBenchmark(unittest.TestCase):
         res = B.benchmark('pairsam-merge', input_json)
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 'c4.8xlarge'
+        assert res['aws']['recommended_instance_type'] == 'c5.9xlarge'
         print(res)
 
     def test_benchmark6(self):
@@ -189,23 +184,21 @@ class TestBenchmark(unittest.TestCase):
         print(res)
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 'r4.large'
+        assert res['aws']['recommended_instance_type'] == 'r5a.large'
 
     def test_benchmark7(self):
         input_json = {'input_size_in_bytes': {'input_pairsam': 1000000000}}
         res = B.benchmark('pairsam-filter', input_json)
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 't2.xlarge'
-        print(res)
+        assert res['aws']['recommended_instance_type'] == 't3.xlarge'
 
     def test_benchmark8(self):
         input_json = {'input_size_in_bytes': {'input_pairs': 1000000000}}
         res = B.benchmark('addfragtopairs', input_json)
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 't2.micro'
-        print(res)
+        assert res['aws']['recommended_instance_type'] == 't3.micro'
 
     def test_benchmark9(self):
         input_json = {'input_size_in_bytes': {'input_pairs': [1000000000,
@@ -214,7 +207,6 @@ class TestBenchmark(unittest.TestCase):
                       'parameters': {'ncores': 16,
                                      'maxmem': '1900g'}}
         res = B.benchmark('hi-c-processing-partb', input_json)
-        print(res)
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
         assert res['aws']['recommended_instance_type'] == 'x1.32xlarge'
@@ -225,7 +217,7 @@ class TestBenchmark(unittest.TestCase):
         print(res)
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 't2.micro'
+        assert res['aws']['recommended_instance_type'] == 't3.micro'
 
     def test_benchmark11(self):
         input_json = {'input_size_in_bytes': {'input_cool': 1000000000,
@@ -236,7 +228,7 @@ class TestBenchmark(unittest.TestCase):
         print(res)
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 'r4.large'
+        assert res['aws']['recommended_instance_type'] == 'r5a.large'
 
     def test_benchmark12(self):
         input_sizes = {'input_bams': [1000000000, 2000000000],
@@ -250,7 +242,7 @@ class TestBenchmark(unittest.TestCase):
         print(res)
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 't2.2xlarge'
+        assert res['aws']['recommended_instance_type'] == 't3.2xlarge'
         assert res['min_CPU'] == 8
 
     def test_benchmark13(self):
@@ -266,7 +258,7 @@ class TestBenchmark(unittest.TestCase):
         assert 'aws' in res
         assert res['min_CPU'] == 8
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 'r4.2xlarge'
+        assert res['aws']['recommended_instance_type'] == 'r5a.2xlarge'
 
     def test_benchmark_none1(self):
         input_json = {'input_size_in_bytes': {'fastq1': 93520,
@@ -290,6 +282,41 @@ class TestBenchmark(unittest.TestCase):
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
         assert res['aws']['recommended_instance_type'] == 't3.small'
+
+
+class TestGetInstanceList(unittest.TestCase):
+    def test_instance_list(self):
+        res = C.instance_list(exclude_a1=True)
+        # we should have quite some instaces in the filter
+        assert len(res) > 50
+        # we should have certain keys in each dictionary
+        for a_field in ['cost_in_usd', 'mem_in_gb', 'cpu', 'instance_type',
+                        'EBS_optimized', 'EBS_optimization_surcharge']:
+            assert a_field in res[0]
+        # no a1 instance should be in the list
+        a1_instances = [i for i in res if i['instance_type'].startswith('a1')]
+        assert not a1_instances
+        # let's test the other way around
+        res_a1 = C.instance_list(exclude_a1=False)
+        a1_instances = [i for i in res_a1 if i['instance_type'].startswith('a1')]
+        assert a1_instances
+
+    def test_get_instance_types(self):
+        res = C.get_instance_types(cpu=10, mem_in_gb=50)
+        # make sure we have something in the results
+        assert res
+        # default ranking is by cost, assert cheapest is the first one
+        costs = [i['cost_in_usd'] for i in res]
+        min_cost = min(costs)
+        max_cost = max(costs)
+        assert res[0]['cost_in_usd'] == min_cost
+        assert res[-1]['cost_in_usd'] == max_cost
+        # limit the result length
+        res = C.get_instance_types(cpu=10, mem_in_gb=50, top=3)
+        assert len(res) == 3
+        # if top is more then the result, it should return all
+        res = C.get_instance_types(cpu=10, mem_in_gb=50, top=300)
+        assert len(res) < 300
 
 
 if __name__ == '__main__':
