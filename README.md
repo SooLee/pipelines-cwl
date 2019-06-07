@@ -50,3 +50,11 @@ or
 ```
 pip install git+git://github.com/SooLee/Benchmark.git
 ```
+
+
+---
+
+Note: From `0.5.3` we have a new function that takes in cpu and memory and returns a sorted list of instance dictionaries.
+```
+get_instance_types(cpu=1, mem_in_gb=0.5, instances=instance_list(), top=10, rank='cost_in_usd')
+```
