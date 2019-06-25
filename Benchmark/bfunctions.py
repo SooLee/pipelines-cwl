@@ -102,8 +102,12 @@ def encode_chipseq_postaln(input_json):
         cpu = input_json['parameters']['chip.spp_cpu']
     else:
         cpu = 2
+    mem = GB2MB(cpu * 7)
+    if 'parameters' in input_json and 'chip.pipeline_type' in input_json['parameters']:
+        if input_json['parameters']['chip.pipeline_type'] == 'tf':
+            mem *= 2
     r = BenchmarkResult(size=total_size_in_gb,
-                        mem=GB2MB(cpu * 7),
+                        mem=mem,
                         cpu=cpu * 4,
                         exclude_t=True)
     return(r.as_dict())
