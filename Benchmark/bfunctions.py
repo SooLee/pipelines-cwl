@@ -585,7 +585,7 @@ def merge_fastq(input_json):
     assert isinstance(in_size['input_fastqs'], list)
 
     # cpu
-    nthreads = 8
+    nthreads = 1
 
     # space
     input_size = B2GB(sum(in_size['input_fastqs']))

@@ -283,7 +283,16 @@ class TestBenchmark(unittest.TestCase):
         assert 'recommended_instance_type' in res['aws']
         assert res['aws']['recommended_instance_type'] == 't3.small'
 
-
+    def test_benchmark_merge_fastq(self):
+        print("merge_fastq")
+        input_sizes = {'input_fastqs': [4000000000, 5000000000]}
+        res = B.benchmark('merge_fastq', {'input_size_in_bytes': input_sizes})
+        print(res)
+        assert 'aws' in res
+        assert 'recommended_instance_type' in res['aws']
+        assert res['aws']['recommended_instance_type'] == 't3.micro'
+        assert int(res['total_size_in_GB']) == 9
+        
 class TestGetInstanceList(unittest.TestCase):
     def test_instance_list(self):
         res = C.instance_list(exclude_a1=True)
