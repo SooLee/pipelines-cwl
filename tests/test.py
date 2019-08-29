@@ -291,7 +291,7 @@ class TestBenchmark(unittest.TestCase):
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
         assert res['aws']['recommended_instance_type'] == 't3.medium'
-        assert int(res['total_size_in_GB']) == 58
+        assert int(res['total_size_in_GB']) == 54
 
 class TestGetInstanceList(unittest.TestCase):
     def test_instance_list(self):
