@@ -576,3 +576,26 @@ def repliseq_parta(input_json):
     r = BenchmarkResult(size=total_space * 1.5, mem=mem * 1.5, cpu=nthreads)
 
     return(r.as_dict())
+
+
+def merge_fastq(input_json):
+    assert 'input_size_in_bytes' in input_json
+    assert 'input_fastqs' in input_json.get('input_size_in_bytes')
+    in_size = input_json['input_size_in_bytes']
+    assert isinstance(in_size['input_fastqs'], list)
+
+    # cpu
+    nthreads = 1
+
+    # space
+    input_size = B2GB(sum(in_size['input_fastqs']))
+    total_size = input_size * 3
+    total_safe_size = total_size * 2
+
+    # mem
+    mem = 4000
+
+    # 32 cores: 1.8G/min (c4.8xlarge), 8 cores: 0.9G/min (r4.2xlarge)
+
+    r = BenchmarkResult(size=total_safe_size, mem=mem, cpu=nthreads)
+    return(r.as_dict())
