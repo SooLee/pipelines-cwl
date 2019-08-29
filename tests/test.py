@@ -285,13 +285,13 @@ class TestBenchmark(unittest.TestCase):
 
     def test_benchmark_merge_fastq(self):
         print("merge_fastq")
-        input_sizes = {'input_fastqs': [4000000000, 5000000000]}
+        input_sizes = {'input_fastqs': [GB2B(4), GB2B(5)]}
         res = B.benchmark('merge-fastq', {'input_size_in_bytes': input_sizes})
         print(res)
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
         assert res['aws']['recommended_instance_type'] == 't3.medium'
-        assert int(res['total_size_in_GB']) == 54
+        assert int(res['total_size_in_GB']) == 58
 
 class TestGetInstanceList(unittest.TestCase):
     def test_instance_list(self):
