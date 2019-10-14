@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # The Github repo for this project is:
 # https://github.com/SooLee/Benchmark
 # IMPORTANT: use Python 2.7 or above for this package
