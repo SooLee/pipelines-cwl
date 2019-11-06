@@ -605,7 +605,6 @@ def bamqc(input_json):
     assert 'input_size_in_bytes' in input_json
     assert 'bamfile' in input_json.get('input_size_in_bytes')
     in_size = input_json['input_size_in_bytes']
-    assert isinstance(in_size['bamfile'], list)
 
     # cpu
     nthreads = 1
