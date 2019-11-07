@@ -293,6 +293,17 @@ class TestBenchmark(unittest.TestCase):
         assert res['aws']['recommended_instance_type'] == 't3.medium'
         assert int(res['total_size_in_GB']) == 54
 
+    def test_benchmark_bamqc(self):
+        print("bamqc")
+        input_sizes = {'bamfile': GB2B(4)}
+        res = B.benchmark('bamqc', {'input_size_in_bytes': input_sizes})
+        print(res)
+        assert 'aws' in res
+        assert 'recommended_instance_type' in res['aws']
+        assert res['aws']['recommended_instance_type'] == 't3.medium'
+        assert int(res['total_size_in_GB']) == 5
+
+
 class TestGetInstanceList(unittest.TestCase):
     def test_instance_list(self):
         res = C.instance_list(exclude_a1=True)

@@ -599,3 +599,25 @@ def merge_fastq(input_json):
 
     r = BenchmarkResult(size=total_safe_size, mem=mem, cpu=nthreads)
     return(r.as_dict())
+
+
+def bamqc(input_json):
+    assert 'input_size_in_bytes' in input_json
+    assert 'bamfile' in input_json.get('input_size_in_bytes')
+    in_size = input_json['input_size_in_bytes']
+
+    # cpu
+    nthreads = 1
+
+    # space
+    input_size = B2GB(in_size['bamfile'])
+    total_size = input_size + 0.5
+    total_safe_size = total_size + 0.5
+
+    # mem
+    mem = 4000
+
+    # 32 cores: 1.8G/min (c4.8xlarge), 8 cores: 0.9G/min (r4.2xlarge)
+
+    r = BenchmarkResult(size=total_safe_size, mem=mem, cpu=nthreads)
+    return(r.as_dict())
