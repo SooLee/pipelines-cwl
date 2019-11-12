@@ -2,6 +2,24 @@ from Benchmark.byteformat import B2GB, B2MB, MB2GB, GB2MB
 from Benchmark.classes import BenchmarkResult
 
 
+def encode_rnaseq_stranded(input_json):
+    assert 'input_size_in_bytes' in input_json
+    r = BenchmarkResult(size=150,
+                        mem=GB2MB(64),
+                        cpu=16,
+                        exclude_t=True)
+    return(r.as_dict())
+
+
+def encode_rnaseq_unstranded(input_json):
+    assert 'input_size_in_bytes' in input_json
+    r = BenchmarkResult(size=150,
+                        mem=GB2MB(64),
+                        cpu=16,
+                        exclude_t=True)
+    return(r.as_dict())
+
+
 def mergebed(input_json):
     assert 'input_size_in_bytes' in input_json
     insz = input_json['input_size_in_bytes']
