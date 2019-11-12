@@ -43,7 +43,7 @@ app_name_function_map = {
     'merge-fastq': merge_fastq,
     'bamqc': bamqc,
     'encode-rnaseq-stranded': encode_rnaseq_stranded,
-    'encode-rnaseq-unstranded': encode_rnaseq_stranded
+    'encode-rnaseq-unstranded': encode_rnaseq_unstranded
 }
 
 
