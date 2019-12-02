@@ -4,7 +4,7 @@ from Benchmark.classes import BenchmarkResult
 
 def encode_rnaseq_stranded(input_json):
     assert 'input_size_in_bytes' in input_json
-    r = BenchmarkResult(size=200,
+    r = BenchmarkResult(size=250,
                         mem=GB2MB(64),
                         cpu=16,
                         exclude_t=True)
@@ -13,7 +13,7 @@ def encode_rnaseq_stranded(input_json):
 
 def encode_rnaseq_unstranded(input_json):
     assert 'input_size_in_bytes' in input_json
-    r = BenchmarkResult(size=200,
+    r = BenchmarkResult(size=250,
                         mem=GB2MB(64),
                         cpu=16,
                         exclude_t=True)
