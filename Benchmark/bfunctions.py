@@ -629,8 +629,8 @@ def bamqc(input_json):
 
     # space
     input_size = B2GB(in_size['bamfile'])
-    total_size = input_size + 0.5
-    total_safe_size = total_size + 0.5
+    total_size = input_size + 5
+    total_safe_size = total_size + 5
 
     # mem
     mem = 4000
