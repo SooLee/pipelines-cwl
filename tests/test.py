@@ -140,6 +140,18 @@ class TestBenchmark(unittest.TestCase):
         assert 'recommended_instance_type' in res['aws']
         assert res['aws']['recommended_instance_type'] == 'c5.4xlarge'
 
+    def test_benchmark_chipseq_postaln2(self):
+        print("testing chipseq")
+        input_sizes = {'chip.tas': [MB2B(115.37), MB2B(115.37)],
+                       'chip.ctl_tas': [MB2B(220.56), MB2B(220.56)],
+                       'chip.bam2ta_no_filt_R1.ta': [MB2B(140.59), MB2B(140.59)]}
+        res = B.benchmark('encode-chipseq-postaln',
+                          {'input_size_in_bytes': input_sizes,
+                           'parameters': {'chip.spp_cpu': 4, 'chip.pipeline_type': 'tf'}})
+        assert 'aws' in res
+        assert 'recommended_instance_type' in res['aws']
+        assert res['aws']['recommended_instance_type'] == 'r5a.4xlarge'
+
     def test_benchmark_chipseq(self):
         print("testing chipseq")
         input_sizes = {'chip.fastqs': [2000000000, 3000000000],
