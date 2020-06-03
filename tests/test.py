@@ -172,7 +172,16 @@ class TestBenchmark(unittest.TestCase):
         assert res['aws']['recommended_instance_type'] == 't3.micro'
         print(res)
 
-    def test_benchmark2(self):
+    def test_benchmark_fastqc(self):
+        res = B.benchmark('fastqc',
+                          {'input_size_in_bytes': {'input_fastq': 20000000000},
+                           'parameters': {'threads': 2}})
+        assert 'aws' in res
+        assert 'recommended_instance_type' in res['aws']
+        assert res['aws']['recommended_instance_type'] == 't3.micro'
+        print(res)
+
+    def test_benchmark_fastqc_old(self):
         res = B.benchmark('fastqc-0-11-4-1',
                           {'input_size_in_bytes': {'input_fastq': 20000000000},
                            'parameters': {'threads': 2}})

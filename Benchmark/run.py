@@ -15,6 +15,7 @@ from Benchmark.bfunctions import *
 app_name_function_map = {
     'md5': md5,
     'fastqc-0-11-4-1': fastqc_0_11_4_1,
+    'fastqc': fastqc,
     'bwa-mem': bwa_mem,
     'pairsam-parse-sort': pairsam_parse_sort,
     'pairsam-merge': pairsam_merge,
