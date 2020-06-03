@@ -179,6 +179,29 @@ def md5(input_json):
     return(r.as_dict())
 
 
+def fastqc(input_json):
+    assert 'input_size_in_bytes' in input_json
+    assert 'input_fastq' in input_json.get('input_size_in_bytes')
+
+    nthreads = 1  # default value according to the cwl
+    if 'parameters' in input_json:
+        if 'threads' in input_json.get('parameters'):
+            nthreads = input_json.get('parameters').get('threads')
+
+    input_in_bytes = input_json.get('input_size_in_bytes').get('input_fastq')
+    input_size = B2GB(input_in_bytes) * 2 + 3
+    if input_size > 100:
+        input_size = input_size + 20
+    mem = 300 * nthreads
+    if mem < 1024:
+        mem = 1024
+    r = BenchmarkResult(size=input_size,
+                        mem=mem,
+                        cpu=nthreads)
+
+    return(r.as_dict())
+
+
 def fastqc_0_11_4_1(input_json):
     assert 'input_size_in_bytes' in input_json
     assert 'input_fastq' in input_json.get('input_size_in_bytes')
