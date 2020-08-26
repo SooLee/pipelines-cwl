@@ -261,7 +261,7 @@ def bwa_mem(input_json):
     return(r.as_dict())
 
 
-def insulator_score_caller(input_json):
+def insulation_scores_and_boundaries_caller(input_json):
     assert 'input_size_in_bytes' in input_json
     assert 'mcoolfile' in input_json.get('input_size_in_bytes')
 
@@ -272,8 +272,8 @@ def insulator_score_caller(input_json):
     input_sizes = input_json.get('input_size_in_bytes')
     data_input_size = input_sizes.get('mcoolfile')
     total_input_size = data_input_size
-    output_bw_size = data_input_size * 0.001
-    total_output_size = output_bw_size
+    output_bw_bed_size = data_input_size * 0.001
+    total_output_size = output_bw_bed_size
     additional_size_in_gb = 2
     total_file_size_in_bp \
         = total_input_size + total_output_size
