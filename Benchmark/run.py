@@ -40,7 +40,7 @@ app_name_function_map = {
     'encode-atacseq-aln': encode_atacseq_aln,
     'encode-atacseq-postaln': encode_atacseq_postaln,
     'mergebed': mergebed,
-    'insulator-score-caller': insulator_score_caller,
+    'insulation-scores-and-boundaries-caller': insulation_scores_and_boundaries_caller,
     'merge-fastq': merge_fastq,
     'bamqc': bamqc,
     'encode-rnaseq-stranded': encode_rnaseq_stranded,
