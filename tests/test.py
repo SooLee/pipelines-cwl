@@ -324,7 +324,7 @@ class TestBenchmark(unittest.TestCase):
         print(res)
         assert 'aws' in res
         assert 'recommended_instance_type' in res['aws']
-        assert res['aws']['recommended_instance_type'] == 't3.small'
+        assert res['aws']['recommended_instance_type'] == 't3.medium'
 
     def test_benchmark_merge_fastq(self):
         print("merge_fastq")
