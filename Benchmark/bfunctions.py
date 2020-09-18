@@ -280,7 +280,7 @@ def insulation_scores_and_boundaries_caller(input_json):
     total_size = B2GB(total_file_size_in_bp) + additional_size_in_gb
 
     # mem
-    mem = GB2MB(2)
+    mem = GB2MB(4)
 
     r = BenchmarkResult(size=total_size, mem=mem, cpu=nthreads)
 
