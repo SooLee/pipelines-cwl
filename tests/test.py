@@ -346,6 +346,15 @@ class TestBenchmark(unittest.TestCase):
         assert res['aws']['recommended_instance_type'] == 't3.medium'
         assert int(res['total_size_in_GB']) == 14
 
+    def test_benchmark_compartments_caller(self):
+        print("compartments-caller")
+        input_json = {'input_size_in_bytes': {'mcoolfile': 32000000000}}
+        res = B.benchmark('compartments-caller', input_json)
+        print(res)
+        assert 'aws' in res
+        assert 'recommended_instance_type' in res['aws']
+        assert res['aws']['recommended_instance_type'] == 't3.small'
+
 
 class TestGetInstanceList(unittest.TestCase):
     def test_instance_list(self):
